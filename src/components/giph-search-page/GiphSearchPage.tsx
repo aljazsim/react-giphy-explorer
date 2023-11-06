@@ -1,61 +1,13 @@
-import { useRef } from "react";
+import { observer } from "mobx-react";
 import { BasicGiphInfo } from "../../common/basicGiphInfo";
-import { PagedList } from "../../common/pagedList";
-import { IRoutingManager } from "../../services/router/IRoutingManager";
-import { IStateManager } from "../../services/state/IStateManager";
 import GiphList from "../giph-list/GiphList";
 import GiphSearchBox from "../giph-search-box/GiphSearchBox";
 import Layout from "../layout/Layout";
+import { GiphSearchPageModel } from "./GiphSearchPageModel";
 
-interface IGiphySearchPage {
-    giphs: PagedList<BasicGiphInfo>;
-    isLoading: boolean;
-    onSearch: (searchKeywords: string, page: number, pageSize: number) => Promise<void>;
-    routingManager: IRoutingManager;
-    stateManager: IStateManager;
-}
-
-export default function GiphSearchPage(props: IGiphySearchPage) {
-    const itemCount = useRef(props.stateManager.state.giphs.items?.length);
-    const searchHistory = useRef(props.stateManager.state.giphs.searchHistory);
-    const searchKeywords = useRef(props.stateManager.state.giphs.search);
-    const totalItemCount = useRef(props.stateManager.state.giphs.totalItemCount);
-
+export const GiphSearchPage = observer((props: { model: GiphSearchPageModel }) => {
     function componentDidMount(): void {
         window.addEventListener("keydown", onKeyDown);
-    }
-
-    function onClear(): void {
-        props.stateManager.setIsLoading(true);
-        props.stateManager.setGiphs([], 0, 1, props.stateManager.state.giphs.pageSize, 0, "");
-        props.stateManager.setIsLoading(false);
-    }
-
-    function onClearSearchHistory(): void {
-        props.stateManager.clearSearchHistory();
-    }
-
-    async function onLoadMore(): Promise<void> {
-        // props.stateManager.setIsLoading(true);
-        // const searchKeywords = props.stateManager.state.giphs.search;
-        // const page = props.stateManager.state.giphs.page + 1;
-        // const pageSize = props.stateManager.state.giphs.pageSize;
-        // const giphs = await props.onSearch(searchKeywords, page, pageSize);
-        // const items = props.stateManager.state.giphs.items.concat(giphs.items);
-        // props.stateManager.setGiphs(items, giphs.totalItemCount, page, giphs.pageSize, giphs.pageCount, searchKeywords);
-        // props.stateManager.setIsLoading(false);
-    }
-
-    async function onSearch(searchKeywords: string): Promise<void> {
-        const page = 1;
-        const pageSize = props.stateManager.state.giphs.pageSize;
-
-        await props.onSearch(searchKeywords, page, pageSize);
-    }
-
-    function onSelect(giph: BasicGiphInfo): void {
-        props.stateManager.selectGiph(null);
-        props.routingManager.goToGiphDetails(giph);
     }
 
     function componentWillUnmount(): void {
@@ -64,7 +16,7 @@ export default function GiphSearchPage(props: IGiphySearchPage) {
 
     function onKeyDown(event: KeyboardEvent): void {
         if (event.key === "Escape") {
-            onClear();
+            props.model.clear();
         }
     }
 
@@ -75,23 +27,23 @@ export default function GiphSearchPage(props: IGiphySearchPage) {
                     {/* search box */}
                     <div className="flex">
                         <GiphSearchBox
-                            isLoading={props.isLoading}
-                            searchKeywords={searchKeywords.current}
-                            searchHistory={searchHistory.current}
-                            hasItems={itemCount.current > 0}
-                            onSearch={(searchKeywords: string) => onSearch(searchKeywords)}
-                            onClearSearchHistory={() => onClearSearchHistory()}
-                            onClear={() => onClear()}></GiphSearchBox>
+                            isLoading={props.model.isLoading}
+                            searchKeywords={props.model.searchKeywords}
+                            searchHistory={props.model.searchHistory}
+                            hasItems={props.model.giphs.length > 0}
+                            onSearch={(searchKeywords: string) => props.model.search(searchKeywords)}
+                            onClearSearchHistory={() => props.model.clearSearchHistory()}
+                            onClear={() => props.model.clear()}></GiphSearchBox>
                     </div>
 
                     {/* list */}
                     <div className="flex flex-col grow mt-2">
                         <GiphList
-                            canLoadMore={itemCount.current < totalItemCount.current}
-                            giphs={props.giphs.items}
-                            isLoading={props.isLoading}
-                            onLoadMore={() => onLoadMore()}
-                            onSelect={(selectedGiph: BasicGiphInfo) => onSelect(selectedGiph)}></GiphList>
+                            canLoadMore={props.model.giphs.length < props.model.totalGiphCount}
+                            giphs={props.model.giphs}
+                            isLoading={props.model.isLoading}
+                            onLoadMore={() => props.model.loadMore()}
+                            onSelect={(selectedGiph: BasicGiphInfo) => props.model.select(selectedGiph)}></GiphList>
                     </div>
 
                     {/* pager */}
@@ -99,4 +51,4 @@ export default function GiphSearchPage(props: IGiphySearchPage) {
                 </>
             }></Layout>
     );
-}
+});

@@ -66,7 +66,7 @@ export class GiphyApiClient implements IGiphyApiClient {
         }
     }
 
-    public async searchGiphs(searchKeywords: string, page: number, pageSize: number): Promise<PagedList<BasicGiphInfo>> {
+    public async getGiphs(searchKeywords: string, page: number, pageSize: number): Promise<PagedList<BasicGiphInfo>> {
         const configuration = this.getHttpConfiguration(this.apiKey);
 
         configuration.params.q = searchKeywords;
@@ -78,7 +78,7 @@ export class GiphyApiClient implements IGiphyApiClient {
             const data = response.data;
             const totalItemCount = data.pagination.total_count;
             const pageCount = Math.ceil(data.pagination.total_count / pageSize);
-            const giphs = data.data.map(d => new BasicGiphInfo(d.id, d.title, d.images.fixed_height.width, d.images.fixed_height.height, d.images.fixed_height.url));
+            const giphs = data.data.map((d: any) => new BasicGiphInfo(d.id, d.title, d.images.fixed_height.width, d.images.fixed_height.height, d.images.fixed_height.url));
 
             return new PagedList<BasicGiphInfo>(totalItemCount, giphs, page, pageSize, pageCount);
         } catch (error) {

@@ -32,6 +32,7 @@ export default function GiphList(props: IGiphList) {
                     {props.giphs.map(giph => (
                         // giph image
                         <div
+                            key={giph.id}
                             style={{ width: giph.width + "px", height: giph.height + "px" }}
                             className="flex grow giph-image hand fadein-animation grow-on-hover"
                             onClick={() => props.onSelect(giph)}>

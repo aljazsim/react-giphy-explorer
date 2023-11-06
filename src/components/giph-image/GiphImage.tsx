@@ -1,9 +1,8 @@
-import "./GiphImage.scss";
 import { BasicGiphInfo } from "../../common/basicGiphInfo";
 
 interface iGiphImage {
-    isLoading: boolean;
     giph: BasicGiphInfo;
+    isLoading: boolean;
 }
 
 export default function GiphImage(props: iGiphImage) {

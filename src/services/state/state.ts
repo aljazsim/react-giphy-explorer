@@ -11,6 +11,6 @@ export interface State {
         pageCount: number;
         search: string;
         searchHistory: string[];
-    },
+    };
     isLoading: boolean;
 }
