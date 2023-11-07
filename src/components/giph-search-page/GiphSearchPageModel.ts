@@ -4,10 +4,12 @@ import { PagedList } from "../../common/pagedList";
 import { toLinq } from "../../helpers/linq-helpers";
 import { GiphImageModel } from "../giph-image/GiphImageModel";
 import { GiphListModel } from "../giph-list/GiphListModel";
+import { GiphPagerModel } from "../giph-pager/GiphPagerModel";
 import { GiphSearchBoxModel } from "../giph-search-box/GiphSearchBoxModel";
 
 export class GiphSearchPageModel {
     public readonly listModel: GiphListModel;
+    public readonly pagerModel: GiphPagerModel;
     public readonly searchBoxModel: GiphSearchBoxModel;
 
     public onGetGiphs = async (searchKeywords: string, page: number, pageSize: number) => new PagedList<BasicGiphInfo>(0, [], 0, 0, 0);
@@ -25,6 +27,8 @@ export class GiphSearchPageModel {
         this.listModel = new GiphListModel();
         this.listModel.onLoadMoreGiphs = () => this.loadMoreGiphs();
         this.listModel.onSelectGiphs = giph => this.selectGiphs(giph);
+
+        this.pagerModel = new GiphPagerModel();
     }
 
     public clearGiphs(): void {
@@ -46,6 +50,7 @@ export class GiphSearchPageModel {
     private async getGiphs(searchKeywords: string, page: number, pageSize: number) {
         this.searchBoxModel.isLoading = true;
         this.listModel.isLoading = true;
+        this.pagerModel.isLoading = true;
 
         const result = await this.onGetGiphs(searchKeywords, page, pageSize);
         const giphModels = toLinq(result.items)
@@ -64,6 +69,10 @@ export class GiphSearchPageModel {
             this.listModel.isLoading = false;
             this.listModel.giphModels = page === 1 ? giphModels : this.listModel.giphModels.concat(giphModels);
             this.listModel.canLoadMore = result.totalItemCount > this.listModel.giphModels.length;
+
+            this.pagerModel.isLoading = false;
+            this.pagerModel.itemCount = this.listModel.giphModels.length;
+            this.pagerModel.totalItemCount = result.totalItemCount;
         });
     }
 }

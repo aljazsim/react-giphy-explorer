@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import { GiphList } from "../giph-list/GiphList";
+import { GiphPager } from "../giph-pager/GiphPager";
 import { GiphSearchBox } from "../giph-search-box/GiphSearchBox";
 import Layout from "../layout/Layout";
 import { GiphSearchPageModel } from "./GiphSearchPageModel";
@@ -34,7 +35,9 @@ export const GiphSearchPage = observer((props: { model: GiphSearchPageModel }) =
                     </div>
 
                     {/* pager */}
-                    <div className="flex mt-2">{/* <giph-pager :isLoading="isLoading" :itemCount="itemCount" :totalItemCount="totalItemCount" ref="statusBar"></giph-pager> */}</div>
+                    <div className="flex mt-2">
+                        <GiphPager model={props.model.pagerModel}></GiphPager>
+                    </div>
                 </>
             }></Layout>
     );
