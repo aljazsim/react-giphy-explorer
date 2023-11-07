@@ -1,36 +1,11 @@
 import "./GiphSearchBox.scss";
-import { useMemo, useRef } from "react";
+import { observer } from "mobx-react";
+import { useRef } from "react";
 import { ArrowPathIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { GiphSearchBoxModel } from "./GiphSearchBoxModel";
 
-interface IGiphySearchBox {
-    hasItems: boolean;
-    isLoading: boolean;
-    onClear: () => void;
-    onClearSearchHistory: () => void;
-    onSearch: (searchKeywords: string) => void;
-    searchHistory: string[];
-    searchKeywords: string;
-}
-
-export default function GiphSearchBox(props: IGiphySearchBox) {
+export const GiphSearchBox = observer((props: { model: GiphSearchBoxModel }) => {
     const input = useRef<HTMLInputElement>(null);
-    const canClear = useMemo(() => !props.isLoading && props.hasItems, [props.isLoading, props.hasItems]);
-    const canSearch = useMemo(() => !props.isLoading && (input.current?.value?.length ?? 0) > 0, [props.isLoading]);
-    const canSeeSearchHistory = useMemo(() => !props.isLoading && props.searchHistory.length > 0, [props.isLoading, props.searchHistory.length]);
-
-    function onClear(): void {
-        props.onClear();
-    }
-
-    function onClearSearchHistory() {
-        props.onClearSearchHistory();
-    }
-
-    function onSearch(searchKeywords: string): void {
-        if (searchKeywords?.length > 0) {
-            props.onSearch(searchKeywords);
-        }
-    }
 
     function selectAll() {
         input?.current?.focus();
@@ -38,7 +13,7 @@ export default function GiphSearchBox(props: IGiphySearchBox) {
     }
 
     return (
-        <div className={"flex flex-row grow flex-wrap justify-center items-stretch search-box p-3" + (props.isLoading ? "search-box-disabled" : "")}>
+        <div className={"flex flex-row grow flex-wrap justify-center items-stretch search-box p-3" + (props.model.isLoading ? "search-box-disabled" : "")}>
             <div className="flex flex-col grow items-stretch">
                 <input
                     type="text"
@@ -46,9 +21,9 @@ export default function GiphSearchBox(props: IGiphySearchBox) {
                     className="flex grow search-input"
                     placeholder="Search Giphs"
                     v-model="model"
-                    disabled={props.isLoading}
-                    onKeyUp={e => e.key === "Enter" && onSearch(e.currentTarget.value)}
-                    onFocus={_ => selectAll()}
+                    disabled={props.model.isLoading}
+                    onKeyUp={e => e.key === "Enter" && props.model.searchGiphs(e.currentTarget.value)}
+                    onFocus={() => selectAll()}
                     ref={input}
                 />
             </div>
@@ -58,53 +33,72 @@ export default function GiphSearchBox(props: IGiphySearchBox) {
                 <button
                     type="button"
                     className="btn btn-primary"
-                    disabled={!canSearch}
-                    onClick={_ => onSearch(input.current?.value ?? "")}>
+                    disabled={!props.model.canSearchGiphs}
+                    onClick={() => props.model.searchGiphs(input.current?.value ?? "")}>
                     <MagnifyingGlassIcon className="h-6 w-6 text-blue-500 me-2" />
                     <span>Search</span>
                 </button>
 
-                {/* search history button */}
-                <div className="dropdown">
+                {/* search history button (disabled) */}
+                {!props.model.canShowSearchGiphHistory && (
                     <button
                         type="button"
                         className="btn btn-primary"
-                        disabled={!canSeeSearchHistory}>
+                        disabled>
                         <ArrowPathIcon className="h-6 w-6 text-blue-500 me-2" />
-                        <span>Search</span>
+                        <span>Search History</span>
                     </button>
+                )}
 
-                    <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        {props.searchHistory.map(searchHistoryItem => (
-                            <li
-                                key={searchHistoryItem}
-                                className="hand bold-on-hover"
-                                onClick={_ => onSearch(searchHistoryItem)}>
-                                <div className="flex flex-row gap-1">
-                                    <MagnifyingGlassIcon className="h-6 w-6 text-blue-500 me-2" />
-                                    {searchHistoryItem}
+                {/* search history button (enabled) */}
+                {props.model.canShowSearchGiphHistory && (
+                    <div className="dropdown">
+                        <label
+                            tabIndex={0}
+                            className="btn btn-primary">
+                            <ArrowPathIcon className="h-6 w-6 text-blue-500 me-2" />
+                            <span>Search History</span>
+                        </label>
+
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                            {/* search history items */}
+                            {props.model.searchKeywordHistory.map(searchHistoryItem => (
+                                <li
+                                    key={searchHistoryItem}
+                                    className="hand bold-on-hover">
+                                    <div
+                                        className="flex flex-row gap-1"
+                                        onClick={() => props.model.searchGiphs(searchHistoryItem)}>
+                                        <MagnifyingGlassIcon className="h-6 w-6 text-blue-500" />
+                                        <span className="text-blue-500">{searchHistoryItem}</span>
+                                    </div>
+                                </li>
+                            ))}
+                            {/* clear search */}
+                            <li className="hand bold-on-hover">
+                                <div
+                                    className="flex flex-row gap-1"
+                                    onClick={() => props.model.clearSearchHistory()}>
+                                    <XMarkIcon className="h-6 w-6 text-blue-500" />
+                                    <span className="text-blue-500">Clear Search History</span>
                                 </div>
                             </li>
-                        ))}
-                        <li className="hand bold-on-hover">
-                            <div className="flex flex-row gap-1">
-                                <XMarkIcon className="h-6 w-6 text-blue-500 me-2" />
-                                Clear history
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                )}
 
-                {/* clear search bbutton */}
+                {/* clear search button */}
                 <button
                     className="btn btn-danger text-bright text-capitalize px-4"
-                    disabled={!canClear}
+                    disabled={!props.model.canClearGiphs}
                     type="button"
-                    onClick={_ => onClear()}>
+                    onClick={() => props.model.clearGiphs()}>
                     <XMarkIcon className="h-6 w-6 text-blue-500 me-2" />
                     Clear
                 </button>
             </div>
         </div>
     );
-}
+});

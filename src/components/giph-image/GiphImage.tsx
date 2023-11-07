@@ -1,19 +1,12 @@
-import { BasicGiphInfo } from "../../common/basicGiphInfo";
+import { GiphImageModel } from "./GiphImageModel";
 
-interface iGiphImage {
-    giph: BasicGiphInfo;
-    isLoading: boolean;
-}
-
-export default function GiphImage(props: iGiphImage) {
-    let complete = false;
-
+export default function GiphImage(props: { model: GiphImageModel }) {
     return (
         <img
-            id={props.giph.id}
-            src={props.giph.url}
-            width={props.giph.width}
-            height={props.giph.height}
+            id={props.model.giph.id}
+            src={props.model.giph.url}
+            width={props.model.giph.width}
+            height={props.model.giph.height}
             loading="lazy"
             alt=""
         />

@@ -15,6 +15,7 @@
     "@types/react-dom": "^18.2.14",
     "axios": "^1.6.0",
     "humps": "^2.0.1",
+    "linq": "^4.0.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "mobx": "^6.10.2",
