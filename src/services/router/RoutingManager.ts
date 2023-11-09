@@ -5,7 +5,7 @@ import { giphDetailsRoute, giphIdParameter, giphSearchRoute, router } from "./ro
 export class RoutingManager implements IRoutingManager {
     public getGiphDetailsParams(): { giphId: string } | null {
         if (this.isGiphDetailsRouteActive()) {
-            return { giphId: matchPath({ path: giphDetailsRoute }, window.location.pathname)?.params.giphId! };
+            return { giphId: this.getRouteParameters(giphDetailsRoute).giphId! };
         } else {
             return null;
         }
@@ -25,5 +25,9 @@ export class RoutingManager implements IRoutingManager {
 
     public isGiphSearchRouteActive(): boolean {
         return router.state.matches.find((r) => r.route.path === giphSearchRoute) !== undefined;
+    }
+
+    private getRouteParameters(route: string) {
+        return matchPath({ path: route }, window.location.pathname)?.params ?? {};
     }
 }
