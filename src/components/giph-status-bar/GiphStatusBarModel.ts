@@ -1,11 +1,15 @@
+import { makeAutoObservable } from "mobx";
 import { callbackNotSetUpVoid } from "../../helpers/event-helpers";
 
-export class GiphStatusBarModel{
+export class GiphStatusBarModel {
     public isLoading = false;
     public onGoBack = () => callbackNotSetUpVoid();
 
-    public goBack()
-    {
+    constructor() {
+        makeAutoObservable(this);
+    }
+
+    public goBack() {
         this.onGoBack();
     }
 }

@@ -1,3 +1,4 @@
+import { makeAutoObservable } from "mobx";
 import { DetailedGiphInfo } from "../../common/detailedGiphInfo";
 import { callbackNotSetUpVoid } from "../../helpers/event-helpers";
 import { formatBytes } from "../../helpers/formatting-helpers";
@@ -9,6 +10,10 @@ export class GiphInfoModel {
     public isLoading = false;
     public onCopyGiph = (giph: DetailedGiphInfo) => callbackNotSetUpVoid();
     public onSaveGiph = (giph: DetailedGiphInfo) => callbackNotSetUpVoid();
+
+    constructor() {
+        makeAutoObservable(this);
+    }
 
     public copy() {
         if (this.giph) {

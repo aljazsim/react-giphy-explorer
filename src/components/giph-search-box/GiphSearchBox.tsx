@@ -20,10 +20,11 @@ export const GiphSearchBox = observer((props: { model: GiphSearchBoxModel }) => 
                     max-length="50"
                     className="flex grow search-input"
                     placeholder="Search Giphs"
-                    v-model="model"
+                    value={props.model.searchKeywords}
                     disabled={props.model.isLoading}
-                    onKeyUp={e => e.key === "Enter" && props.model.searchGiphs(e.currentTarget.value)}
+                    onKeyUp={e => e.key === "Enter" && props.model.searchKeywords.length > 0 && props.model.searchGiphs(props.model.searchKeywords)}
                     onFocus={() => selectAll()}
+                    onChange={e => (props.model.searchKeywords = e.currentTarget.value)}
                     ref={input}
                 />
             </div>
@@ -33,14 +34,14 @@ export const GiphSearchBox = observer((props: { model: GiphSearchBoxModel }) => 
                 <button
                     type="button"
                     className="btn btn-primary"
-                    disabled={!props.model.canSearchGiphs}
+                    disabled={props.model.searchKeywords.length === 0}
                     onClick={() => props.model.searchGiphs(input.current?.value ?? "")}>
                     <MagnifyingGlassIcon className="h-6 w-6 text-blue-500 me-2" />
                     <span>Search</span>
                 </button>
 
                 {/* search history button (disabled) */}
-                {!props.model.canShowSearchGiphHistory && (
+                {props.model.searchKeywordHistory.length === 0 && (
                     <button
                         type="button"
                         className="btn btn-primary"
@@ -51,7 +52,7 @@ export const GiphSearchBox = observer((props: { model: GiphSearchBoxModel }) => 
                 )}
 
                 {/* search history button (enabled) */}
-                {props.model.canShowSearchGiphHistory && (
+                {props.model.searchKeywordHistory.length > 0 && (
                     <div className="dropdown">
                         <label
                             tabIndex={0}

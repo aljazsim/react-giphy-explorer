@@ -9,7 +9,7 @@
     "endOfLine": "lf",
     "bracketSameLine": true,
     "bracketSpacing": true,
-    "arrowParens": "avoid",
+    "arrowParens": "always",
     "singleAttributePerLine": true,
     "quoteProps": "consistent"
 }

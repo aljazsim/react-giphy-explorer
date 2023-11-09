@@ -1,4 +1,5 @@
 import { observer } from "mobx-react";
+import { useEffect } from "react";
 import { GiphInfo } from "../giph-info/GiphInfo";
 import { GiphStatusBar } from "../giph-status-bar/GiphStatusBar";
 import { GiphTitleBar } from "../giph-title-bar/GiphTitleBar";
@@ -6,6 +7,10 @@ import Layout from "../layout/Layout";
 import { GiphDetailsPageModel } from "./GiphDetailsPageModel";
 
 export const GiphDetailsPage = observer((props: { model: GiphDetailsPageModel }) => {
+    useEffect(() => {
+        props.model.activate().then(() => {});
+    });
+
     return (
         <Layout
             content={

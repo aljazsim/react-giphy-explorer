@@ -5,9 +5,9 @@ import { GiphTitleBarModel } from "./GiphTitleBarModel";
 
 export const GiphTitleBar = observer((props: { model: GiphTitleBarModel }) => {
     return (
-        <div className={"flex justify-between items-center title-bar p-3" + (props.model.isLoading ? "title-bar-disabled" : "")}>
+        <div className={"flex grow justify-between items-center title-bar p-3" + (props.model.isLoading ? "title-bar-disabled" : "")}>
             <ArrowLeftIcon
-                className="hand grow-on-hover"
+                className="h-6 w-6 me-2 hand grow-on-hover"
                 onClick={() => props.model.goBack()}></ArrowLeftIcon>
 
             <span className="text-center fw-bold mx-4">{props.model.title}</span>
@@ -16,10 +16,11 @@ export const GiphTitleBar = observer((props: { model: GiphTitleBarModel }) => {
                 <img
                     src={props.model.userAvatarUrl ?? ""}
                     alt=""
-                    height="30"
+                    className="h-10 w-10"
                 />
             )}
-            {!props.model.userAvatarUrl && <span v-else>&nbsp;</span>}
+
+            {!props.model.userAvatarUrl && <span>&nbsp;</span>}
         </div>
     );
 });

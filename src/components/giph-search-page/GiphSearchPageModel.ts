@@ -13,7 +13,7 @@ export class GiphSearchPageModel {
     public readonly searchBoxModel: GiphSearchBoxModel;
 
     public onGetGiphs = async (searchKeywords: string, page: number, pageSize: number) => new PagedList<BasicGiphInfo>(0, [], 0, 0, 0);
-    public onSelectGiph = (giph: BasicGiphInfo | null) => {};
+    public onSelectGiph = (giph: BasicGiphInfo) => {};
     public page = 1;
     public pageSize = 10;
 
@@ -63,8 +63,6 @@ export class GiphSearchPageModel {
 
             this.searchBoxModel.isLoading = false;
             this.searchBoxModel.canClearGiphs = result.items.length > 0;
-            this.searchBoxModel.canSearchGiphs = true;
-            this.searchBoxModel.canShowSearchGiphHistory = this.searchBoxModel.searchKeywordHistory.length > 0;
 
             this.listModel.isLoading = false;
             this.listModel.giphModels = page === 1 ? giphModels : this.listModel.giphModels.concat(giphModels);

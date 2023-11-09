@@ -3,8 +3,6 @@ import { makeAutoObservable } from "mobx";
 
 export class GiphSearchBoxModel {
     public canClearGiphs = false;
-    public canSearchGiphs = false;
-    public canShowSearchGiphHistory = false;
     public isLoading = false;
     public onClearGiphs = () => {};
     public onSearchGiphs = (searchKeywords: string) => {};
@@ -16,23 +14,22 @@ export class GiphSearchBoxModel {
     }
 
     public clearGiphs(): void {
+        this.searchKeywords = "";
         this.onClearGiphs();
     }
 
     public clearSearchHistory() {
-        debugger;
         this.searchKeywordHistory = [];
-        this.canShowSearchGiphHistory = false;
     }
 
     public searchGiphs(searchKeywords: string): void {
-        debugger;
         this.addSearchKeywordHistory(searchKeywords);
         this.onSearchGiphs(searchKeywords);
+        this.searchKeywords = searchKeywords;
     }
 
-    private addSearchKeywordHistory(searchKeyword: string) {
-        this.searchKeywordHistory.push(searchKeyword);
+    private addSearchKeywordHistory(searchKeywords: string) {
+        this.searchKeywordHistory.push(searchKeywords);
         this.searchKeywordHistory = Enumerable.from(this.searchKeywordHistory)
             .where(sk => sk != null && sk !== "")
             .orderBy(sk => sk.toLowerCase())

@@ -1,24 +1,26 @@
 import "./GiphStatusBar.scss";
 import { observer } from "mobx-react";
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { GiphStatusBarModel } from "./GiphStatusBarModel";
 
 export const GiphStatusBar = observer((props: { model: GiphStatusBarModel }) => {
     return (
-        <div className={"flex justify-between items-center status-bar p-3" + (props.model.isLoading ? "status-bar-disabled" : "")}>
-            <ArrowRightIcon
-                className="hand grow-on-hover"
-                onClick={() => props.model.goBack()}></ArrowRightIcon>
+        <div className={"flex flex-row grow justify-between items-center status-bar p-3" + (props.model.isLoading ? "status-bar-disabled" : "")}>
+            {/* arrow left */}
+            <ArrowLeftIcon
+                className="h-6 w-6 me-2 hand grow-on-hover"
+                onClick={() => props.model.goBack()}></ArrowLeftIcon>
 
+            {/* links */}
             <div className="flex flex-row flex-wrap justify-center mx-4">
-                <span className="text-center">giphy explorer</span>
+                <span className="text-center">Giphy Explorer</span>
                 <span className="text-center mx-2">|</span>
                 <span className="text-center">
-                    <a href="https://vuejs.org/">Vue.js</a> masterclass
+                    <a href="https://react.dev/">React</a>
                 </span>
                 <span className="text-center mx-2">|</span>
                 <span className="text-center">
-                    By <a href="https://github.com/aljazsim">Aljaz Simonic</a> 2022
+                    By <a href="https://github.com/aljazsim">Aljaz Simonic</a> 2023
                 </span>
                 <span className="text-center mx-2">|</span>
                 <span className="text-center">

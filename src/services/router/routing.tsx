@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+import { GiphDetailsPage } from "../../components/giph-details-page/GiphDetailPage";
 import { GiphSearchPage } from "../../components/giph-search-page/GiphSearchPage";
-import { giphSearchPageModel } from "../../dependency-injection";
+import { giphDetailsPageModel, giphSearchPageModel } from "../../dependency-injection";
 
 function createRoute(path: string, element: ReactNode): RouteObject {
     return { path: path, element: element };
@@ -16,7 +17,7 @@ export const giphSearchRoute = "/search";
 
 export const router = createBrowserRouter([
     createRoute(defaultRoute, <GiphSearchPage model={giphSearchPageModel} />),
-    createRoute(giphSearchRoute, <GiphSearchPage model={giphSearchPageModel} />)
-    // { path: giphDetailsRoute, name: giphDetailsRouteName, component: GiphDetails },
+    createRoute(giphSearchRoute, <GiphSearchPage model={giphSearchPageModel} />),
+    createRoute(giphDetailsRoute, <GiphDetailsPage model={giphDetailsPageModel} />)
     // { path: catchAllRoute, redirect: giphSearchRoute }
 ]);

@@ -5,10 +5,9 @@ export default function GiphImage(props: { model: GiphImageModel }) {
         <img
             id={props.model.giph.id}
             src={props.model.giph.url}
-            width={props.model.giph.width}
-            height={props.model.giph.height}
             loading="lazy"
             alt=""
+            className="object-cover h-full w-full "
         />
     );
 }

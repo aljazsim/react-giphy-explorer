@@ -6,11 +6,11 @@ import Layout from "../layout/Layout";
 import { GiphSearchPageModel } from "./GiphSearchPageModel";
 
 export const GiphSearchPage = observer((props: { model: GiphSearchPageModel }) => {
-    function componentDidMount(): void {
+    function componentDidMount() {
         window.addEventListener("keydown", onKeyDown);
     }
 
-    function componentWillUnmount(): void {
+    function componentWillUnmount() {
         window.removeEventListener("keydown", onKeyDown);
     }
 

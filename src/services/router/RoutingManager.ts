@@ -1,19 +1,18 @@
-import { BasicGiphInfo } from "../../common/basicGiphInfo";
+import { matchPath } from "react-router-dom";
 import { IRoutingManager } from "./IRoutingManager";
 import { giphDetailsRoute, giphIdParameter, giphSearchRoute, router } from "./routing";
 
 export class RoutingManager implements IRoutingManager {
     public getGiphDetailsParams(): { giphId: string } | null {
-        debugger;
         if (this.isGiphDetailsRouteActive()) {
-            return { giphId: "???" };
+            return { giphId: matchPath({ path: giphDetailsRoute }, window.location.pathname)?.params.giphId! };
         } else {
             return null;
         }
     }
 
-    public goToGiphDetails(giph: BasicGiphInfo): void {
-        router.navigate(giphDetailsRoute.replace(giphIdParameter, giph.id));
+    public goToGiphDetails(giphId: string): void {
+        router.navigate(giphDetailsRoute.replace(giphIdParameter, giphId));
     }
 
     public goToGiphSearch(): void {
@@ -21,10 +20,10 @@ export class RoutingManager implements IRoutingManager {
     }
 
     public isGiphDetailsRouteActive(): boolean {
-        return router.state.matches.find(r => r.route.path === giphDetailsRoute) !== undefined;
+        return router.state.matches.find((r) => r.route.path === giphDetailsRoute) !== undefined;
     }
 
     public isGiphSearchRouteActive(): boolean {
-        return router.state.matches.find(r => r.route.path === giphSearchRoute) !== undefined;
+        return router.state.matches.find((r) => r.route.path === giphSearchRoute) !== undefined;
     }
 }

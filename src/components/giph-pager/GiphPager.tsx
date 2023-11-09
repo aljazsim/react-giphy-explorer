@@ -4,7 +4,7 @@ import { GiphPagerModel } from "./GiphPagerModel";
 
 export const GiphPager = observer((props: { model: GiphPagerModel }) => {
     return (
-        <div className={"flex flex-row grow justify-between align-center pager p-3 " + (props.model.isLoading ? "pager-disabled" : "")}>
+        <div className={"flex flex-row grow justify-between items-center pager p-3 " + (props.model.isLoading ? "pager-disabled" : "")}>
             {/* pager */}
             {props.model.itemCount > 0 && props.model.totalItemCount > 0 && (
                 <span className="text-center">
@@ -16,8 +16,8 @@ export const GiphPager = observer((props: { model: GiphPagerModel }) => {
             <span>&nbsp;</span>
 
             {/* links */}
-            <div className="flex flex-row flex-wrap justify-center align-center mx-4">
-                <span className="text-center">giphy explorer</span>
+            <div className="flex flex-row flex-wrap justify-center mx-4">
+                <span className="text-center">Giphy Explorer</span>
                 <span className="text-center mx-2">|</span>
                 <span className="text-center">
                     <a href="https://react.dev/">React</a>
