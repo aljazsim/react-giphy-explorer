@@ -10,7 +10,7 @@ import { GiphyApiClient } from "./services/api/GiphyApiClient";
 import { RoutingManager } from "./services/router/RoutingManager";
 
 // services
-const giphyApiClient = new GiphyApiClient("http://api.giphy.com/v1", "");
+const giphyApiClient = new GiphyApiClient("http://api.giphy.com/v1", "<INSERT-GIPHY-API-KEY>");
 const routingManager = new RoutingManager();
 
 // models

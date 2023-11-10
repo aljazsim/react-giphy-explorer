@@ -36,20 +36,20 @@ export const GiphInfo = observer((props: { model: GiphInfoModel }) => {
                                         className="text-center"
                                         colSpan={2}>
                                         <button
-                                            className="btn btn-primary text-bright text-capitalize px-4"
+                                            className="btn btn-info text-bright text-capitalize px-4"
                                             disabled={props.model.isLoading}
                                             type="button"
                                             onClick={() => props.model.save()}>
-                                            <BookmarkSquareIcon className="h-6 w-6 text-blue-500 me-2" />
+                                            <BookmarkSquareIcon className="h-6 w-6 me-2" />
                                             Save
                                         </button>
 
                                         <button
-                                            className="btn btn-primary text-bright text-capitalize px-4 ms-4"
+                                            className="btn btn-info text-bright text-capitalize px-4 ms-4"
                                             disabled={props.model.isLoading}
                                             type="button"
                                             onClick={() => props.model.copy()}>
-                                            <DocumentDuplicateIcon className="h-6 w-6 text-blue-500 me-2"></DocumentDuplicateIcon>
+                                            <DocumentDuplicateIcon className="h-6 w-6 me-2"></DocumentDuplicateIcon>
                                             Copy URL
                                         </button>
                                     </td>

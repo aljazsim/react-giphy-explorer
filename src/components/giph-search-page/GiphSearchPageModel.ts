@@ -15,23 +15,24 @@ export class GiphSearchPageModel {
     public onGetGiphs = async (searchKeywords: string, page: number, pageSize: number) => new PagedList<BasicGiphInfo>(0, [], 0, 0, 0);
     public onSelectGiph = (giph: BasicGiphInfo) => {};
     public page = 1;
-    public pageSize = 10;
+    public pageSize = 30;
 
     constructor() {
         makeAutoObservable(this);
 
         this.searchBoxModel = new GiphSearchBoxModel();
         this.searchBoxModel.onClearGiphs = () => this.clearGiphs();
-        this.searchBoxModel.onSearchGiphs = searchKeywords => this.searchGiphs(searchKeywords);
+        this.searchBoxModel.onSearchGiphs = (searchKeywords) => this.searchGiphs(searchKeywords);
 
         this.listModel = new GiphListModel();
         this.listModel.onLoadMoreGiphs = () => this.loadMoreGiphs();
-        this.listModel.onSelectGiphs = giph => this.selectGiphs(giph);
+        this.listModel.onSelectGiphs = (giph) => this.selectGiphs(giph);
 
         this.pagerModel = new GiphPagerModel();
     }
 
     public clearGiphs(): void {
+        this.searchBoxModel.searchKeywords = "";
         this.getGiphs("", 1, this.pageSize);
     }
 
@@ -54,7 +55,7 @@ export class GiphSearchPageModel {
 
         const result = await this.onGetGiphs(searchKeywords, page, pageSize);
         const giphModels = toLinq(result.items)
-            .select(g => new GiphImageModel(g))
+            .select((g) => new GiphImageModel(g))
             .toArray();
 
         runInAction(() => {
@@ -62,7 +63,6 @@ export class GiphSearchPageModel {
             this.pageSize = result.pageSize;
 
             this.searchBoxModel.isLoading = false;
-            this.searchBoxModel.canClearGiphs = result.items.length > 0;
 
             this.listModel.isLoading = false;
             this.listModel.giphModels = page === 1 ? giphModels : this.listModel.giphModels.concat(giphModels);

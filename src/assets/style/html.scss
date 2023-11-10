@@ -18,8 +18,17 @@ input {
     color: #666666 !important;
 }
 
+input:focus::placeholder {
+    color: transparent;
+}
+
 button {
     min-width: 8.5rem;
+    border-radius: 0.25rem !important;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 /* scrollbar */
