@@ -1,0 +1,9 @@
+@use "./html.scss";
+@use "./classes.scss";
+@use "./animations.scss";
+@use "./fonts.scss";
+@use "./theme.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

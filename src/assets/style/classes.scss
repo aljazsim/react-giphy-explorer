@@ -1,0 +1,24 @@
+.button-auto-width {
+    min-width: auto;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.no-click {
+    pointer-events: none;
+}
+
+.bold-on-hover:hover {
+    font-weight: bold;
+}
+
+.hand {
+    cursor: pointer;
+}
