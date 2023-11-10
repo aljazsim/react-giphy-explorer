@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# React Giphy Explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React Giphy Explorer is a [React](https://react.dev/) and [Daisy UI](https://daisyui.com/) web application showcasing basic elements of both frameworks. It allows users to explore gips offered by [Giphy Web API](https://developers.giphy.com/) on the web.
 
-## Available Scripts
+![Giphy Explorer](./giphy-explorer.gif)
 
-In the project directory, you can run:
+## Running the application
 
-### `npm start`
+1. ensure you have [Node.js](https://nodejs.org/en/) installed
+2. clone the repo: `git clone https://github.com/aljazsim/react-giphy-explorer.git`
+3. go to the source directory: `src`
+4. set the Giphy api key
+    1. register for a developer account at [https://developers.giphy.com/](https://developers.giphy.com/)
+    2. create an app
+    3. copy Giphy API key
+    4. set the key in `src\dependency-injection.ts` (replace string `<INSERT-GIPHY-API-KEY>` with the actual API KEY)
+5. install dependencies: `npm install`
+6. run development server: `npm run serve`
+7. open a web browser and go to [http://localhost:3000/](http://localhost:3000/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Libraries used
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Some of the libraries being used in Giphy Explorer
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   [React](https://react.dev/) (library for web and native user interfaces),
+-   [React Router](https://reactrouter.com/) (React routing library)
+-   [Mobx](https://mobx.js.org/) (React state management library)
+-   [axios](https://axios-http.com/) (promise based HTTP JavaScript client),
+-   [qs](github.com/ljharb/qs) (query string parsing library),
+-   [DaisyUI](https://daisyui.com/) (TailwindCSS based component library),
+-   [Humps](https://github.com/domchristie/humps) (framework for converting JavaScript objects with underscore-case property naming notation to camel-case and back),
+-   [TailwindCSS](https://tailwindcss.com/) (utility-first CSS framework)
