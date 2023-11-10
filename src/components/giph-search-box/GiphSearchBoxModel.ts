@@ -22,6 +22,10 @@ export class GiphSearchBoxModel {
         this.searchKeywordHistory = [];
     }
 
+    public updateSearchKeywords(searchKeywords: string) {
+        this.searchKeywords = searchKeywords;
+    }
+
     public focus() {
         this.onFocus();
     }

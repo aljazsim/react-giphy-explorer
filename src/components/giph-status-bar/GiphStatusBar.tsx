@@ -13,7 +13,9 @@ export const GiphStatusBar = observer((props: { model: GiphStatusBarModel }) => 
 
             {/* links */}
             <div className="flex flex-row flex-wrap justify-center mx-4">
-                <span className="text-center">Giphy Explorer</span>
+                <span className="text-center">
+                    <a href="https://github.com/aljazsim/react-giphy-explorer">Giphy Explorer</a>
+                </span>
                 <span className="text-center mx-2">|</span>
                 <span className="text-center">
                     <a href="https://react.dev/">React</a>

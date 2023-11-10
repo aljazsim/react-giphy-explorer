@@ -114,7 +114,8 @@ export const GiphInfo = observer((props: { model: GiphInfoModel }) => {
                                     <td className="text-break">
                                         <a
                                             href={props.model.giph?.source}
-                                            target="_blank">
+                                            target="_blank"
+                                            rel="noreferrer">
                                             {props.model.giph?.source}
                                         </a>
                                     </td>
@@ -128,7 +129,8 @@ export const GiphInfo = observer((props: { model: GiphInfoModel }) => {
                                     <td className="text-break">
                                         <a
                                             href={props.model.giph?.embedUrl}
-                                            target="_blank">
+                                            target="_blank"
+                                            rel="noreferrer">
                                             {props.model.giph?.embedUrl}
                                         </a>
                                     </td>
@@ -177,7 +179,8 @@ export const GiphInfo = observer((props: { model: GiphInfoModel }) => {
                                     <td className="text-break">
                                         <a
                                             href={props.model.giph?.userProfileUrl}
-                                            target="_blank">
+                                            target="_blank"
+                                            rel="noreferrer">
                                             {props.model.giph?.userProfileUrl}
                                         </a>
                                     </td>

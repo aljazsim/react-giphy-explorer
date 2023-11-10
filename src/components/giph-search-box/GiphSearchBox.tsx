@@ -8,7 +8,7 @@ export const GiphSearchBox = observer((props: { model: GiphSearchBoxModel }) => 
     const input = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        props.model.onFocus = () => input?.current?.focus();
+        props.model.onFocus = () => selectAll();
     });
 
     function selectAll() {
@@ -28,7 +28,7 @@ export const GiphSearchBox = observer((props: { model: GiphSearchBoxModel }) => 
                     disabled={props.model.isLoading}
                     onKeyUp={(e) => e.key === "Enter" && props.model.searchKeywords.length > 0 && props.model.searchGiphs(props.model.searchKeywords)}
                     onFocus={() => selectAll()}
-                    onChange={(e) => (props.model.searchKeywords = e.currentTarget.value)}
+                    onChange={(e) => props.model.updateSearchKeywords(e.currentTarget.value)}
                     ref={input}
                 />
             </div>
